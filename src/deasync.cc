@@ -1,18 +1,18 @@
 #include <node.h>
 #include <v8.h>
+#include <nan.h>
 
-using namespace v8;
-
-static Handle<Value> Run(const Arguments& args) {
-  HandleScope scope;
-
+NAN_METHOD(Run) {
   uv_run(uv_default_loop(), UV_RUN_ONCE);
-
-  return scope.Close(Undefined());
+  return info.GetReturnValue().SetUndefined();
 }
 
-static void Init(Handle<Object> target) {
-  node::SetMethod(target, "run", Run);
+NAN_MODULE_INIT(Init){
+  Nan::Set(
+      target
+    , Nan::New<v8::String>("run").ToLocalChecked()
+    , Nan::GetFunction(Nan::New<v8::FunctionTemplate>(Run)).ToLocalChecked()
+  );
 }
 
 NODE_MODULE(deasync, Init)

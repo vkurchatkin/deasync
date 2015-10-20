@@ -1,26 +1,22 @@
 var binding = require('bindings')('deasync');
 
-function deasync (fn) {
+function deasync (_fn) {
   return function () {
-    var done = false;
-    var args = Array.prototype.slice.apply(arguments).concat(cb);
-    var err;
-    var res;
+    var self = { err: null, res: null, done: false },
+        fn = Function.prototype.bind.bind(_fn, this).apply(arguments);
 
-    fn.apply(this, args);
-
+    fn(callback.bind(self))
     while (!done) binding.run();
-
     if (err) throw err;
 
     return res;
-
-    function cb (e, r) {
-      err = e;
-      res = r;
-      done = true;
-    }
   }
+}
+
+function callback (err, res) {
+  this.err = err;
+  this.res = res;
+  this.done = true;
 }
 
 module.exports = deasync;

@@ -6,6 +6,7 @@
   "author": "Vladimir Kurchatkin <vladimir.kurchatkin@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "bindings": "~1.1.1"
+    "bindings": "~1.1.1",
+    "nan": "^2.0.9"
   }
 }

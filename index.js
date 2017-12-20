@@ -41,7 +41,7 @@
 			var res;
 
 			fn.apply(this, args);
-			module.exports.loopWhile(function(){return !done;});
+			module.exports.loopWhile(function(){ return !done; });
 			if (err)
 				throw err;
 
@@ -71,6 +71,20 @@
 		process._tickCallback();
 		if(pred()) binding.run();
 	  }
+	};
+
+	module.exports.wait = function(pr) {
+		var done, result;
+
+		done = false;
+		result = undefined;
+
+		pr.then(function(r) {
+			done   = true;
+			result = r;
+		});
+		deasync.loopWhile(() => { return !done });
+		return result;
 	};
 
 }());

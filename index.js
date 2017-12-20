@@ -73,7 +73,7 @@
 	  }
 	};
 
-	module.exports.wait = function(pr) {
+	module.exports.await = function(pr) {
 		var done, result;
 
 		done = false;

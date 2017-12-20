@@ -42,4 +42,4 @@ async function trim(str) {
 	return str.trim()
 }
 
-console.log(deasync.wait(trim('       hello       ')))
+console.log(deasync.await(trim('       hello       ')))
